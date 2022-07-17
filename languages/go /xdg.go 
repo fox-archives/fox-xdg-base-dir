@@ -1,0 +1,36 @@
+
+package xdg
+
+import (
+	"os"
+	"filepath"
+)
+
+
+
+func xdgApply(envVar string, defaultPath string) string {
+	value := os.getEnv(envVar)
+	if len(value) > 0 && value[0] == '/' {
+		return value
+	} else {
+		return defaultPath
+	}
+}
+
+func XdgConfigHome() string {
+	return xdgApply("XDG_CONFIG_HOME", filepath.join(os.Getenv("HOME"), ".config"))
+}
+
+func XdgCacheHome() string {
+	return xdgApply("XDG_CACHE_HOME", filepath.join(os.Getenv("HOME"), ".cache"))
+}
+
+func XdgDataHome() string {
+	return xdgApply("XDG_DATA_HOME", filepath.join(os.Getenv("HOME"), ".local", "share"))
+}
+
+func XdgStateHome() string {
+	return xdgApply("XDG_STATE_HOME", filepath.join(os.Getenv("HOME"), ".local", "state"))
+}
+
+

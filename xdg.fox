@@ -1,0 +1,303 @@
+lang c ([
+	#include <stdlib.h>
+	#include <string.h>
+]) lang cs ([
+	package com.fox.main;
+
+	public class Pkg {
+]) lang cpp ([
+	#include <cstdlib>
+	#include <filesystem>
+	#include <string>
+]) lang deno ([
+	import * as path from 'https://deno.land/std/path/mod.ts'
+]) lang go ([
+	package xdg
+
+	import (
+		"os"
+		"filepath"
+	)
+]) lang java ([
+	package com.fox.main;
+
+	public class Pkg {
+]) lang kotlin ([
+	package com.fox.main;
+]) lang nim ([
+	import std/os
+	import strutils
+]) lang nodejs ([
+	import * as path from 'node:path'
+]) lang python ([
+	import os
+	from pathlib import Path
+])
+
+lang c ([
+	static char *xdgApply(char *envVar, char *defaultPath[] ) {
+		char *value = getenv(envVar);
+		if (value != NULL && value[0] == '/') {
+			return value;
+		} else {
+			char *str = NULL;
+		
+			char *item = defaultPath[0];
+			for (unsigned int i = 0; item != NULL; ++i, item = defaultPath[i] ) {
+				char *new_str = malloc(strlen(str) + strlen(item) + 2);
+				strcpy(new_str, str);
+				strcpy(new_str + strlen(str), item);
+				free(str);
+				str = new_str;
+			}
+
+			return value;
+		}
+	}
+]) lang cs ([
+	private String xdgApply() {
+
+	}
+]) lang cpp ([
+	auto xdgApply(std::string envVar, std::string defaultPath) -> std::string {
+	  auto value = std::string(std::getenv(envVar.c_str()));
+	  if (value.size() > 0 && value.at(0) == '/') {
+	    return value;
+	  } else {
+	    return defaultPath;
+	  }
+	}
+]) lang deno ([
+	function xdgApply(envVar: string, defaultPath: string): string {
+		const value = Deno.env.get(envVar) || ''
+		if (value[0] === '/') {
+			return value
+		} else {
+			return defaultPath
+		}
+	}
+]) lang go ([
+	func xdgApply(envVar string, defaultPath string) string {
+		value := os.getEnv(envVar)
+		if len(value) > 0 && value[0] == '/' {
+			return value
+		} else {
+			return defaultPath
+		}
+	}
+]) lang java ([
+	String xdgApply(String envVar, String defaultPath) {
+		var value = System.getenv(envVar);
+		if (value.length > 0 && value.charAt(0) == '/') {
+			return value;
+		} else {
+			return defaultPath;
+		}
+	}
+]) lang kotlin ([
+	fun xdgApply(envVar: String, defaultPath: string): String {
+		val val = System.getenv(envVar)
+		if (value.length > 0 && value.charAt(0) == '/') {
+			return value
+		} else {
+			return defaultPath
+		}
+	}
+]) lang nim ([
+	proc xdgApply(envVar: string, defaultPath: string): string =
+	  var value = getEnv(envVar)
+	  if value and startsWith(value, '/'):
+	    return value
+	  else:
+	    return defaultPath
+]) lang nodejs ([
+	function xdgApply(envVar: string, defaultPath: string): string {
+		const value = process.env.envVar || ''
+		if (value[0] === '/') {
+			return value
+		} else {
+			return defaultPath
+		}
+	}
+]) lang python ([
+	def xdg_apply(envVar: str, defaultPath: str) -> str:
+	  value = os.environ.get(envVar)
+	  if len(value) and value[0] == '/':
+	    return value
+	  else:
+	    return defaultPath
+])
+
+# xdg_config_home
+lang c ([
+	extern char *xdgConfigHome() {
+		char *arr[] = (char *[] ){ getenv("HOME"), ".config", NULL };
+		return xdgApply("XDG_CONFIG_HOME", &arr);
+	}
+]) lang cs ([
+	public String xdgConfigHome() {
+		return xdgApply("XDG_CONFIG_HOME", Path.Combine(System.Environment.GetEnvironmentVariable("XDG_CONFIG_HOME"), ".config"));
+	} 
+]) lang cpp ([
+	auto xdgConfigHome() -> std::string {
+		return xdgApply("XDG_CONFIG_HOME", std::filesystem::path(std::getenv("HOME")) / ".config");
+	}
+]) lang deno ([
+	export function xdgConfigHome(): string {
+		return xdgApply('XDG_CONFIG_HOME', path.join(Deno.env.get('HOME'), '.config'))
+	}
+]) lang go ([
+	func XdgConfigHome() string {
+		return xdgApply("XDG_CONFIG_HOME", filepath.join(os.Getenv("HOME"), ".config"))
+	}
+]) lang java ([
+	String xdgConfigHome() {
+		return xdgApply("XDG_CONFIG_HOME", Paths.get(System.getenv("HOME"), ".config"));
+	}
+]) lang kotlin ([
+	fun xdgConfigHome(): String {
+		return xdgApply("XDG_CONFIG_HOME", Paths.get(System.getenv("HOME"), ".config"));
+	}
+])lang nim ([
+	proc xdgConfigHome*(): string =
+	  return xdgApply("XDG_CONFIG_HOME", joinPath(os.getEnv("HOME"), ".config"))
+]) lang nodejs ([
+	export function xdgConfigHome(): string {
+		return xdgApply('XDG_CONFIG_HOME', path.join(process.env.HOME, '.config'))
+	}
+]) lang python ([
+	def xdg_config_home() -> Path:
+	  return xdg_apply('XDG_CONFIG_HOME', Path.home() / '.config')
+])
+
+# xdg_cache_home
+lang c ([
+	extern char *xdgCacheHome() {
+		char *arr[] = (char *[] ){ getenv("HOME"), ".cache", NULL };
+		return xdgApply("XDG_CACHE_HOME", &arr);
+	}
+]) lang cs ([
+	public String xdgCacheHome() {
+		return xdgApply("XDG_CACHE_HOME", Path.Combine(System.Environment.GetEnvironmentVariable("XDG_CACHE_HOME"), ".cache"));
+	} 
+]) lang cpp ([
+	auto xdgCacheHome() -> std::string {
+		return xdgApply("XDG_CACHE_HOME", std::filesystem::path(std::getenv("HOME")) / ".cache");
+	}
+]) lang deno ([
+	export function xdgCacheHome(): string {
+		return xdgApply('XDG_CACHE_HOME', path.join(Deno.env.get('HOME'), '.cache'))
+	}
+]) lang go ([
+	func XdgCacheHome() string {
+		return xdgApply("XDG_CACHE_HOME", filepath.join(os.Getenv("HOME"), ".cache"))
+	}
+]) lang java ([
+	String xdgCacheHome() {
+		return xdgApply("XDG_CACHE_HOME", Paths.get(System.getenv("HOME"), ".cache"));
+	}
+]) lang kotlin ([
+	fun xdgCacheHome(): String {
+		return xdgApply("XDG_CACHE_HOME", Paths.get(System.getenv("HOME"), ".cache"));
+	}
+]) lang nim ([
+	proc xdgCacheHome*(): string =
+	  return xdgApply("XDG_CACHE_HOME", joinPath(os.getEnv("HOME"), ".cache"))
+]) lang nodejs ([
+	export function xdgCacheHome(): string {
+		return xdgApply('XDG_CACHE_HOME', path.join(process.env.HOME, '.cache'))
+	}
+]) lang python ([
+	def xdg_cache_home() -> Path:
+	  return xdg_apply('XDG_CACHE_HOME', Path.home() / '.cache')
+])
+
+# xdg_data_home
+lang c ([
+	extern char *xdgDataHome() {
+		char *arr[] = (char *[] ){ getenv("HOME"), ".local", "share", NULL };
+		return xdgApply("XDG_DATA_HOME", &arr);
+	}
+]) lang cs ([
+	public String xdgDataHome() {
+		return xdgApply("XDG_DATA_HOME", Path.Combine(System.Environment.GetEnvironmentVariable("XDG_DATA_HOME"), ".local", "share"));
+	} 
+]) lang cpp ([
+	auto xdgDataHome() -> std::string {
+		return xdgApply("XDG_DATA_HOME", std::filesystem::path(std::getenv("HOME")) / ".local" / "share");
+	}
+]) lang deno ([
+	export function xdgDataHome(): string {
+		return xdgApply('XDG_DATA_HOME', path.join(Deno.env.get('HOME'), '.local', 'share'))
+	}
+]) lang go ([
+	func XdgDataHome() string {
+		return xdgApply("XDG_DATA_HOME", filepath.join(os.Getenv("HOME"), ".local", "share"))
+	}
+]) lang java ([
+	String XdgDataHome() {
+		return xdgApply("XDG_DATA_HOME", Paths.get(System.getenv("HOME"), ".local", "share"));
+	}
+]) lang java ([
+	fun xdgDataHome(): String {
+		return xdgApply("XDG_DATA_HOME", Paths.get(System.getenv("HOME"), ".local", "share"));
+	}
+]) lang nim ([
+	proc xdgDataHome*(): string =
+	  return xdgApply("XDG_DATA_HOME", joinPath(os.getEnv("HOME"), ".local", "share"))
+]) lang nodejs ([
+	export function xdgDataHome(): string {
+		return xdgApply('XDG_DATA_HOME', path.join(process.env.HOME, '.local', 'share'))
+	}
+]) lang python ([
+	def xdg_data_home() -> Path:
+	  return xdg_apply('XDG_DATA_HOME', Path.home() / '.local' / 'share')
+])
+
+# xdg_state_home
+lang c ([
+	extern char *xdgStateHome() {
+		char *arr[] = (char *[] ){ getenv("HOME"), ".local", "state", NULL };
+		return xdgApply("XDG_STATE_HOME", &arr);
+	}
+]) lang cs ([
+	public String xdgStateHome() {
+		return xdgApply("XDG_STATE_HOME", Path.Combine(System.Environment.GetEnvironmentVariable("XDG_STATE_HOME"), ".local", "state"));
+	} 
+]) lang cpp ([
+	auto xdgStateHome() -> std::string {
+		return xdgApply("XDG_STATE_HOME", std::filesystem::path(std::getenv("HOME")) / ".local" / "state");
+	}
+]) lang deno ([
+	export function xdgStateHome(): string {
+		return xdgApply('XDG_STATE_HOME', path.join(Deno.env.get('HOME'), '.local', 'state'))
+	}
+]) lang go ([
+	func XdgStateHome() string {
+		return xdgApply("XDG_STATE_HOME", filepath.join(os.Getenv("HOME"), ".local", "state"))
+	}
+]) lang java ([
+	String XdgStateHome() {
+		return xdgApply("XDG_STATE_HOME", Paths.get(System.getenv("HOME"), ".local", "state"));
+	}
+]) lang java ([
+	fun xdgStateHome() String {
+		return xdgApply("XDG_STATE_HOME", Paths.get(System.getenv("HOME"), ".local", "state"));
+	}
+]) lang nim ([
+	proc xdgStateHome*(): string =
+	  return xdgApply("XDG_STATE_HOME", joinPath(os.getEnv("HOME"), ".local", "state"))
+]) lang nodejs ([
+	export function xdgStateHome(): string {
+		return xdgApply('XDG_STATE_HOME', path.join(process.env.HOME, '.local', 'state'))
+	}
+]) lang python ([
+	def xdg_state_home() -> Path:
+		return xdg_apply('XDG_STATE_HOME', Path.home() / '.local', 'state')
+])
+
+lang cs ([
+	}
+]) lang java ([
+	}
+]) 
